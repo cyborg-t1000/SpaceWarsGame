@@ -19,7 +19,7 @@ public class MenuScreen extends BaseScreen {
         super.show();
         img = new Texture("badlogic.jpg");
         touch = new Vector2();
-        v = new Vector2(1, 1);
+        v = new Vector2(0, 0);
     }
 
     @Override
