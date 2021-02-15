@@ -8,17 +8,22 @@ import com.badlogic.gdx.math.Vector2;
 import com.kgtu.spacewars.base.BaseScreen;
 import com.kgtu.spacewars.math.Rect;
 import com.kgtu.spacewars.sprite.Background;
+import com.kgtu.spacewars.sprite.Logo;
 
 public class MenuScreen extends BaseScreen {
 
     private Texture bg;
     private Background background;
+    private Texture logotx;
+    private Logo logo;
 
     @Override
     public void show() {
         super.show();
         bg = new Texture("textures/bg.png");
         background = new Background(bg);
+        logotx = new Texture("badlogic.jpg");
+        logo = new Logo(logotx);
     }
 
     @Override
@@ -27,12 +32,15 @@ public class MenuScreen extends BaseScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         background.draw(batch);
+        logo.update(delta);
+        logo.draw(batch);
         batch.end();
     }
 
     @Override
     public void dispose() {
         bg.dispose();
+        logotx.dispose();
         super.dispose();
     }
 
@@ -43,6 +51,7 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
+        logo.touchDown(touch, pointer, button);
         return super.touchDown(touch, pointer, button);
     }
 }
