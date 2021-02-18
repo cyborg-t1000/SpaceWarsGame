@@ -6,6 +6,6 @@ import com.kgtu.spacewars.screen.MenuScreen;
 public class SpaceWarsGame extends Game {
 	@Override
 	public void create () {
-		setScreen(new MenuScreen());
+		setScreen(new MenuScreen(this));
 	}
 }
