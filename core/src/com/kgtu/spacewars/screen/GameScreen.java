@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.kgtu.spacewars.base.BaseScreen;
 import com.kgtu.spacewars.math.Rect;
 import com.kgtu.spacewars.sprite.Background;
+import com.kgtu.spacewars.sprite.ButtonExit;
+import com.kgtu.spacewars.sprite.Ship;
 import com.kgtu.spacewars.sprite.Star;
 
 public class GameScreen extends BaseScreen {
@@ -20,6 +22,8 @@ public class GameScreen extends BaseScreen {
 
     private Background background;
     private Star[] stars;
+    private Ship ship;
+
 
     @Override
     public void show() {
@@ -31,6 +35,7 @@ public class GameScreen extends BaseScreen {
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
+        ship = new Ship(atlas);
     }
 
     @Override
@@ -45,6 +50,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.resize(worldBounds);
         }
+        ship.resize(worldBounds);
     }
 
     @Override
@@ -78,6 +84,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.update(delta);
         }
+        ship.update(delta);
     }
 
     private void draw() {
@@ -88,6 +95,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
+        ship.draw(batch);
         batch.end();
     }
 }
