@@ -1,6 +1,7 @@
 package com.kgtu.spacewars.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -27,9 +28,16 @@ public class GameScreen extends BaseScreen {
 
     private MainShip mainShip;
 
+    private Music music;
+
     @Override
     public void show() {
         super.show();
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/zanac-bgm-1-no-intro.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.7f);
+        music.play();
+
         bg = new Texture("textures/bg.png");
         atlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
         background = new Background(bg);
@@ -62,6 +70,7 @@ public class GameScreen extends BaseScreen {
         bg.dispose();
         atlas.dispose();
         bulletPool.dispose();
+        music.dispose();
         super.dispose();
     }
 
