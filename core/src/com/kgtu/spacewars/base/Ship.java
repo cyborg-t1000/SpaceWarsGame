@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import com.kgtu.spacewars.math.Rect;
+import com.kgtu.spacewars.math.Rnd;
 import com.kgtu.spacewars.pool.BulletPool;
 import com.kgtu.spacewars.sprite.Bullet;
 
@@ -33,6 +34,7 @@ public class Ship extends Sprite {
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
+        this.reloadTimer = Rnd.nextFloat(0, this.reloadInterval);
     }
 
     @Override
