@@ -9,6 +9,7 @@ import com.kgtu.spacewars.math.Rect;
 import com.kgtu.spacewars.pool.BulletPool;
 
 public class EnemyShip extends Ship {
+    Vector2 initSpeed;
 
     public EnemyShip(BulletPool bulletPool, Rect worldBounds, Sound sound) {
         this.bulletPool = bulletPool;
@@ -16,6 +17,7 @@ public class EnemyShip extends Ship {
         this.sound = sound;
         v = new Vector2();
         v0 = new Vector2();
+        vInit = new Vector2();
         bulletPos = new Vector2();
         bulletV = new Vector2();
     }
@@ -42,6 +44,7 @@ public class EnemyShip extends Ship {
     ) {
         this.regions = regions;
         this.v.set(v0);
+        this.vInit.set(v0.cpy().scl(10));
         this.bulletRegion = bulletRegion;
         this.bulletHeight = bulletHeight;
         this.bulletV.set(bulletV);
@@ -49,5 +52,5 @@ public class EnemyShip extends Ship {
         this.reloadInterval = reloadInterval;
         setHeightProportion(height);
         this.hp = hp;
-    }
+     }
 }

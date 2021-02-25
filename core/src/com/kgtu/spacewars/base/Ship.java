@@ -13,6 +13,7 @@ public class Ship extends Sprite {
 
     protected Vector2 v0;
     protected Vector2 v;
+    protected Vector2 vInit;
 
     protected Rect worldBounds;
     protected BulletPool bulletPool;
@@ -34,12 +35,16 @@ public class Ship extends Sprite {
 
     public Ship(TextureRegion region, int rows, int cols, int frames) {
         super(region, rows, cols, frames);
-        this.reloadTimer = Rnd.nextFloat(0, this.reloadInterval);
+        reloadTimer = Rnd.nextFloat(0, reloadInterval);
     }
 
     @Override
     public void update(float delta) {
-        pos.mulAdd(v, delta);
+        if (this.getTop() > worldBounds.getTop()) {
+            pos.mulAdd(vInit, delta);
+        } else {
+            pos.mulAdd(v, delta);
+        }
         reloadTimer += delta;
         if (reloadTimer >= reloadInterval) {
             reloadTimer = 0f;
