@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.kgtu.spacewars.base.Ship;
 import com.kgtu.spacewars.math.Rect;
 import com.kgtu.spacewars.pool.BulletPool;
+import com.kgtu.spacewars.pool.ExplosionPool;
 
 public class MainShip extends Ship {
 
@@ -21,9 +22,10 @@ public class MainShip extends Ship {
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, ExplosionPool explosionPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
+        this.explosionPool = explosionPool;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         v = new Vector2();
         v0 = new Vector2(0.5f, 0);
@@ -137,6 +139,14 @@ public class MainShip extends Ship {
 
     public void dispose() {
         sound.dispose();
+    }
+
+    public boolean isBulletCollision(Rect bullet) {
+        return !(bullet.getRight() < getLeft()
+                || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y
+                || bullet.getTop() < getBottom()
+        );
     }
 
     private void moveRight() {
