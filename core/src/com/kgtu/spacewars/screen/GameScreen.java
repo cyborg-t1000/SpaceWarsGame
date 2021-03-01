@@ -127,11 +127,13 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.update(delta);
         }
-        mainShip.update(delta);
         bulletPool.updateActiveSprites(delta);
         explosionPool.updateActiveSprites(delta);
         enemyPool.updateActiveSprites(delta);
-        enemyEmitter.generate(delta);
+        if(!mainShip.isDestroyed()) {
+            mainShip.update(delta);
+            enemyEmitter.generate(delta);
+        }
     }
 
     private void checkCollisions() {
