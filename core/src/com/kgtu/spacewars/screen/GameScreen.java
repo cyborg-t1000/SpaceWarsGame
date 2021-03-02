@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.List;
@@ -17,7 +18,9 @@ import com.kgtu.spacewars.pool.EnemyPool;
 import com.kgtu.spacewars.pool.ExplosionPool;
 import com.kgtu.spacewars.sprite.Background;
 import com.kgtu.spacewars.sprite.Bullet;
+import com.kgtu.spacewars.sprite.ButtonExit;
 import com.kgtu.spacewars.sprite.EnemyShip;
+import com.kgtu.spacewars.sprite.GameOver;
 import com.kgtu.spacewars.sprite.MainShip;
 import com.kgtu.spacewars.sprite.Star;
 import com.kgtu.spacewars.utils.EnemyEmitter;
@@ -31,6 +34,7 @@ public class GameScreen extends BaseScreen {
 
     private Background background;
     private Star[] stars;
+    private GameOver gameOver;
 
     private BulletPool bulletPool;
     private ExplosionPool explosionPool;
@@ -50,6 +54,7 @@ public class GameScreen extends BaseScreen {
         bg = new Texture("textures/bg.png");
         atlas = new TextureAtlas(Gdx.files.internal("textures/mainAtlas.tpack"));
         background = new Background(bg);
+        gameOver = new GameOver(atlas);
         stars = new Star[STAR_COUNT];
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
@@ -83,6 +88,7 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         mainShip.resize(worldBounds);
+        gameOver.resize(worldBounds);
     }
 
     @Override
@@ -130,8 +136,8 @@ public class GameScreen extends BaseScreen {
         bulletPool.updateActiveSprites(delta);
         explosionPool.updateActiveSprites(delta);
         enemyPool.updateActiveSprites(delta);
+        mainShip.update(delta);
         if(!mainShip.isDestroyed()) {
-            mainShip.update(delta);
             enemyEmitter.generate(delta);
         }
     }
@@ -154,7 +160,7 @@ public class GameScreen extends BaseScreen {
                 continue;
             }
             if (bullet.getOwner() != mainShip) {
-                if (mainShip.isBulletCollision(bullet)) {
+                if (mainShip.isBulletCollision(bullet) && !mainShip.isDestroyed()) {
                     mainShip.damage(bullet.getDamage());
                     bullet.destroy();
                 }
@@ -186,10 +192,17 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
-        mainShip.draw(batch);
-        bulletPool.drawActiveSprites(batch);
-        explosionPool.drawActiveSprites(batch);
-        enemyPool.drawActiveSprites(batch);
+        if(!mainShip.isDestroyed()) {
+            mainShip.draw(batch);
+            bulletPool.drawActiveSprites(batch);
+            explosionPool.drawActiveSprites(batch);
+            enemyPool.drawActiveSprites(batch);
+        } else {
+            explosionPool.drawActiveSprites(batch);
+            enemyPool.destroyAll();
+            bulletPool.destroyAll();
+            gameOver.draw(batch);
+        }
         batch.end();
     }
 }
