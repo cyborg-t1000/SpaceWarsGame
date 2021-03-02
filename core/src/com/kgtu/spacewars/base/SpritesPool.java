@@ -67,4 +67,12 @@ public abstract class SpritesPool<T extends Sprite> {
         activeObjects.clear();
         freeObjects.clear();
     }
+
+    public void destroyAll() {
+        for (T item : activeObjects) {
+            if (!item.isDestroyed()) {
+                item.destroy();
+            }
+        }
+    }
 }
