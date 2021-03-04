@@ -70,7 +70,7 @@ public class EnemyEmitter {
             if (enemyType < 0.5f) {
                 enemyShip.set(
                         enemySmallRegions,
-                        enemySmallV,
+                        enemySmallV.cpy().scl(level),
                         bulletRegion,
                         ENEMY_SMALL_BULLET_HEIGHT,
                         enemySmallBulletV,
@@ -82,7 +82,7 @@ public class EnemyEmitter {
             } else if (enemyType < 0.8f) {
                 enemyShip.set(
                         enemyMediumRegions,
-                        enemyMediumV,
+                        enemyMediumV.cpy().scl(level),
                         bulletRegion,
                         ENEMY_MEDIUM_BULLET_HEIGHT,
                         enemyMediumBulletV,
@@ -94,7 +94,7 @@ public class EnemyEmitter {
             } else {
                 enemyShip.set(
                         enemyBigRegions,
-                        enemyBigV,
+                        enemyBigV.cpy().scl(level),
                         bulletRegion,
                         ENEMY_BIG_BULLET_HEIGHT,
                         enemyBigBulletV,

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.kgtu.spacewars.base.Ship;
 import com.kgtu.spacewars.math.Rect;
+import com.kgtu.spacewars.math.Rnd;
 import com.kgtu.spacewars.pool.BulletPool;
 import com.kgtu.spacewars.pool.ExplosionPool;
 
@@ -59,6 +60,7 @@ public class EnemyShip extends Ship {
         setHeightProportion(height);
         this.hp = hp;
         v.set(0, START_V_Y);
+        this.v0.x = Rnd.nextFloat(this.v0.y, -this.v0.y);
     }
 
     public boolean isBulletCollision(Rect bullet) {
