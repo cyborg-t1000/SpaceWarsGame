@@ -7,9 +7,9 @@ import java.util.List;
 
 public abstract class SpritesPool<T extends Sprite> {
 
-    protected final List<T> activeObjects = new ArrayList<T>();
+    protected final List<T> activeObjects = new ArrayList<>();
 
-    protected final List<T> freeObjects = new ArrayList<T>();
+    protected final List<T> freeObjects = new ArrayList<>();
 
     protected abstract T newObject();
 
@@ -50,6 +50,11 @@ public abstract class SpritesPool<T extends Sprite> {
                 sprite.flushDestroy();
             }
         }
+    }
+
+    public void freeAllActiveSprites() {
+        freeObjects.addAll(activeObjects);
+        activeObjects.clear();
     }
 
     private void free(T object) {
